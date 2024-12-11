@@ -10,7 +10,7 @@
   }: let
     inherit (hyprland.inputs) nixpkgs;
     eachSystem = nixpkgs.lib.genAttrs (import hyprland.inputs.systems);
-    pkgsFor = eachSystem (system: import nixpkgs {localSystem = system;});
+    pkgsFor = eachSystem (system: nixpkgs.legacyPackages.${system});
     rawCommitPins = (builtins.fromTOML (builtins.readFile ./hyprpm.toml)).repository.commit_pins;
     commitPins = builtins.listToAttrs (
       map (p: {
